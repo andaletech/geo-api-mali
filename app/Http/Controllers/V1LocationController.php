@@ -15,7 +15,7 @@ use Illuminate\Http\Response;
  * @author Biri Sylla <biri.sylla@andaletech.com>
  * @license MIT
  */
-class LocationController extends BaseController
+class V1LocationController extends BaseController
 {
     /**
      * Get all locations and allow research.
@@ -27,9 +27,7 @@ class LocationController extends BaseController
     {
         $query = Location::query();
         $name = $request->query('name');
-        if ($name) {
-            $query = $query->where('name', 'like', '%' . $name .'%');
-        }
+        $query->searchByName($name);
         return response()->json(['status' => 'succes', 'locations' => $query->get()]);
     }
 
@@ -68,9 +66,7 @@ class LocationController extends BaseController
     {
         $query = Location::query()->cercle();
         $name = $request->query('name');
-        if ($name) {
-            $query = $query->where('name', 'like', '%' . $name .'%');
-        }
+        $query->searchByName($name);
         return response()->json(['status' => 'succes', 'cercles' => $query->where('parent_id', $id)->get()]);
     }
 
@@ -89,7 +85,6 @@ class LocationController extends BaseController
         }
         $communes = new Collection();
         $location->getCommunes($communes);
-
         return response()->json(['status' => 'succes', 'communes' => $communes]);
     }
 
@@ -103,9 +98,7 @@ class LocationController extends BaseController
     {
         $query = Location::query()->region();
         $name = $request->query('name');
-        if ($name) {
-            $query = $query->where('name', 'like', '%' . $name .'%');
-        }
+        $query->searchByName($name);
         return response()->json(['status' => 'succes', 'regions' => $query-> get()]);
     }
 
@@ -126,13 +119,16 @@ class LocationController extends BaseController
     }
 
     /**
-     * Get all circles.
+     * Get all circles and allow research.
      *
      * @return json
      */
-    public function getCercles()
+    public function getCercles(Request $request)
     {
-        return response()->json(['status' => 'succes', 'cercles' => Location::cercle()-> get()]);
+        $query = Location::query()->cercle();
+        $name = $request->query('name');
+        $query->searchByName($name);
+        return response()->json(['status' => 'succes', 'regions' => $query-> get()]);
     }
 
     /**
@@ -155,9 +151,10 @@ class LocationController extends BaseController
      *
      * @return json
      */
-    public function getCommunes()
+    public function getCommunes(Request $request)
     {
-        return response()->json(['status' => 'succes', 'communes' => Location::commune()-> get()]);
+        $query = Location::query()->commune()->searchByName($request->query('name'));
+        return response()->json(['status' => 'success', 'locations' => $query-> get()]);
     }
 
     /**

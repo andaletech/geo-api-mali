@@ -13,16 +13,20 @@ With geoapimali you can:
 ## Examples
 
 - Get All locations:
-    - ```GET``` <a href="https://geo.apimali.com/locations" target="_blank">https://geo.apimali.com/locations</a>
+    - ```GET``` <a href="https://geo.apimali.com/v1/locations" target="_blank">https://geo.apimali.com/v1/locations</a>
+- Get A Single location By ID:
+    - ```GET``` <a href="https://geo.apimali.com/v1/locations/1" target="_blank">https://geo.apimali.com/v1/locations/1</a>
 - Get All Regions:
-    - ```GET``` <a href="https://geo.apimali.com/regions" target="_blank">https://geo.apimali.com/regions</a>
+    - ```GET``` <a href="https://geo.apimali.com/v1/regions" target="_blank">https://geo.apimali.com/v1/regions</a>
 - Get All Cercles:
-    - ```GET``` <a href="https://geo.apimali.com/cercles" target="_blank">https://geo.apimali.com/cercles</a>
+    - ```GET``` <a href="https://geo.apimali.com/v1/cercles" target="_blank">https://geo.apimali./v1/cercles</a>
 - Get All Communes:
-    - ```GET``` <a href="https://geo.apimali.com/communes" target="_blank">https://geo.apimali.com/communes</a>
+    - ```GET``` <a href="https://geo.apimali.com/v1/communes" target="_blank">https://geo.apimali.com/v1/communes</a>
 - Get All Quartiers:
-    - ```GET``` <a href="https://geo.apimali.com/quartiers" target="_blank">https://geo.apimali.com/quartiers</a>
+    - ```GET``` <a href="https://geo.apimali.com/v1/quartiers" target="_blank">https://geo.apimali.com/v1/quartiers</a>
 - Search All Locations whose name contains bama:
-    - **Request**: ```GET``` <a href="https://geo.apimali.com/locations?name=bama" target="_blank">https://geo.apimali.com/locations?name=bama</a>
+    - **Request**: ```GET``` <a href="https://geo.apimali.com/v1/locations?name=bama" target="_blank">https://geo.apimali.com/v1/locations?name=bama</a>
+- Get all locations that are administratively dependent of the given location
+    - **Request**: ```GET``` <a href="https://geo.apimali.com/v1/locations/78/locations" target="_blank">https://geo.apimali.com/v1/locations/78/locations</a>
 
 

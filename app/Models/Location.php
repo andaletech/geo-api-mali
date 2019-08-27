@@ -147,6 +147,23 @@ class Location extends Model
             return $subQ->quartier();
         });
     }
+    
+    /**
+    * Search locations by name if $name is provided.
+    *
+    * @param \Illuminate\Database\Eloquent\Builder $query.
+    * @param string The name (or part of the name) to search for.
+    * @param bool $like If true (default), the sql query will be
+    */
+    public function scopeSearchByName(Builder $query, $name, $like = true)
+    {
+        if (empty($name)) {
+            return $query;
+        }
+        $operator = $like ? 'like' : '=';
+        $name = $like ? '%' . $name .'%' : $name;
+        return $query->where('name', $operator, $name);
+    }
 
     #endregion query scope
     
