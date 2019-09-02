@@ -25,9 +25,7 @@ class V1LocationController extends BaseController
      */
     public function index(Request $request)
     {
-        $query = Location::query();
-        $name = $request->query('name');
-        $query->searchByName($name);
+        $query = Location::query()->searchByName($request->query('name'));
         return response()->json(['status' => 'succes', 'locations' => $query->get()]);
     }
 
@@ -64,9 +62,7 @@ class V1LocationController extends BaseController
      */
     public function getCerclesOfRegion(Request $request, $id)
     {
-        $query = Location::query()->cercle();
-        $name = $request->query('name');
-        $query->searchByName($name);
+        $query = Location::query()->cercle()->searchByName($request->query('name'));
         return response()->json(['status' => 'succes', 'cercles' => $query->where('parent_id', $id)->get()]);
     }
 
@@ -96,9 +92,7 @@ class V1LocationController extends BaseController
      */
     public function getRegions(Request $request)
     {
-        $query = Location::query()->region();
-        $name = $request->query('name');
-        $query->searchByName($name);
+        $query = Location::query()->region()->searchByName($request->query('name'));
         return response()->json(['status' => 'succes', 'regions' => $query-> get()]);
     }
 
@@ -110,8 +104,7 @@ class V1LocationController extends BaseController
      */
     public function showRegion($id)
     {
-        $region = showLocation($id)->region();
-        /* $region = Location::region()->find($id);*/
+        $region = Location::query()->find($id);
         if ($region) {
             return response()->json(['status' => 'succes', 'regions' => $region]);
         }
@@ -125,9 +118,7 @@ class V1LocationController extends BaseController
      */
     public function getCercles(Request $request)
     {
-        $query = Location::query()->cercle();
-        $name = $request->query('name');
-        $query->searchByName($name);
+        $query = Location::query()->cercle()->searchByName($request->query('name'));
         return response()->json(['status' => 'succes', 'regions' => $query-> get()]);
     }
 
@@ -181,11 +172,7 @@ class V1LocationController extends BaseController
      */
     public function getCommunesOfCercle(Request $request, $id)
     {
-        $query = Location::query()->commune();
-        $name = $request->query('name');
-        if ($name) {
-            $query = $query->where('name', 'like', '%' . $name .'%');
-        }
+        $query = Location::query()->commune()->searchByName($request->query('name'));
         return response()->json(['status' => 'succes', 'communes' => $query->where('parent_id', $id)->get()]);
     }
 
@@ -194,9 +181,10 @@ class V1LocationController extends BaseController
      *
      * @return json
      */
-    public function getQuartiers()
+    public function getQuartiers(Request $request)
     {
-        return response()->json(['status' => 'succes', 'quartiers' => Location::quartier()-> get()]);
+        $query = Location::query()->quartier()->searchByName($request->query('name'));
+        return response()->json(['status' => 'succes', 'locations' => $query-> get()]);
     }
 
     /**
@@ -223,11 +211,7 @@ class V1LocationController extends BaseController
      */
     public function getQuartiersOfCommune(Request $request, $id)
     {
-        $query = Location::query()->quartier();
-        $name = $request->query('name');
-        if ($name) {
-            $query = $query->where('name', 'like', '%' . $name .'%');
-        }
+        $query = Location::query()->quartier()->searchByName($request->query('name'));
         return response()->json(['status' => 'succes', 'quartier' => $query->where('parent_id', $id)->get()]);
     }
 }
