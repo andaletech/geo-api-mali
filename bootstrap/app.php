@@ -97,4 +97,12 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
+$app->configure('cors');
+
+$app->middleware([
+    Spatie\Cors\Cors::class,
+]);
+
+$app->register(Spatie\Cors\CorsServiceProvider::class);
+
 return $app;
